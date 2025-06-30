@@ -43,19 +43,19 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 hero-content fade-in">
-                    <h1 id="name">載入中...</h1>
-                    <p class="subtitle" id="title">載入中...</p>
+                    <h1 id="name"></h1>
+                    <p class="subtitle" id="title"></p>
                     <div class="mb-3">
                         <strong>專業領域：</strong>
-                        <span id="expertise">載入中...</span>
+                        <span id="expertise"></span>
                     </div>
                     <div class="mb-3">
                         <strong>學歷：</strong>
-                        <span id="education">載入中...</span>
+                        <span id="education"></span>
                     </div>
                     <div class="mb-4">
                         <strong>聯絡信箱：</strong>
-                        <a href="mailto:" class="text-white" id="email">載入中...</a>
+                        <a href="mailto:" class="text-white" id="email"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 text-center fade-in">
@@ -74,7 +74,6 @@
                     <div class="card fade-in">
                         <div class="card-body p-4">
                             <p class="lead text-center" id="about-text">
-                                欒斌博士在東海大學取得工業工程學士學位，隨後在美國威斯康辛大學麥迪遜分校獲得工業工程碩士和博士學位。2023年，他被史丹佛大學認定為世界前2%科學家之一。
                             </p>
                         </div>
                     </div>
@@ -117,7 +116,7 @@
                                     <i class="fas fa-envelope"></i>
                                     <div>
                                         <strong>電子郵件</strong><br>
-                                        <a href="mailto:luarn@mail.ntust.edu.tw" class="text-white" id="contact-email1">luarn@mail.ntust.edu.tw</a><br>
+                                        <a href="mailto:" class="text-white" id="contact-email1"></a><br>
                                         <a href="mailto:luarnpin@gmail.com" class="text-white">luarnpin@gmail.com</a>
                                     </div>
                                 </div>
@@ -127,7 +126,7 @@
                                     <i class="fas fa-phone"></i>
                                     <div>
                                         <strong>電話</strong><br>
-                                        <span id="contact-phone">886-2-2737-6754</span>
+                                        <span id="contact-phone"></span>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +135,7 @@
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <strong>位置</strong><br>
-                                <span id="contact-location">研究室: T2-409<br>國立臺灣科技大學</span>
+                                <span id="contact-location"></span>
                             </div>
                         </div>
                     </div>
@@ -156,8 +155,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Profile data will be loaded from data.txt
-        let profileData = {};
+        // ====== 使用者資料區域 - 請修改以下內容 ======
+        const profileData = {
+            name: "欒斌 教授",
+            title: "世界前2%科學家 | 教育部師鐸獎第113屆得主",
+            expertise: "電子商務、網路行銷、AI應用",
+            education: "美國威斯康辛大學麥迪遜分校工業工程博士",
+            email: "luarn@mail.ntust.edu.tw",
+            about: "欒斌博士在東海大學取得工業工程學士學位，隨後在美國威斯康辛大學麥迪遜分校獲得工業工程碩士和博士學位。2023年，他被史丹佛大學認定為世界前2%科學家之一。",
+            contactEmail: "luarn@mail.ntust.edu.tw",
+            phone: "886-2-2737-6754",
+            location: "研究室: T2-409<br>國立臺灣科技大學"
+        };
+        // ====== 使用者資料區域結束 ======
 
         // Project data
         const projects = [
@@ -192,118 +202,31 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            loadDataFromFile().then(() => {
-                loadProfileData();
-                renderProjects('all');
-                initScrollAnimations();
-                initSmoothScrolling();
-            }).catch(error => {
-                console.error('載入資料失敗:', error);
-                // 如果載入失敗，使用預設資料
-                useDefaultData();
-                loadProfileData();
-                renderProjects('all');
-                initScrollAnimations();
-                initSmoothScrolling();
-            });
+            loadProfileData();
+            renderProjects('all');
+            initScrollAnimations();
+            initSmoothScrolling();
         });
 
-        // Load data from data.txt file
-        async function loadDataFromFile() {
-            try {
-                const response = await fetch('data.txt');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const text = await response.text();
-                parseDataFromText(text);
-            } catch (error) {
-                console.error('讀取 data.txt 失敗:', error);
-                throw error;
-            }
-        }
-
-        // Parse data from text content
-        function parseDataFromText(text) {
-            const lines = text.split('\n').filter(line => line.trim() !== '');
-            
-            profileData = {};
-            
-            lines.forEach(line => {
-                if (line.includes('姓名：')) {
-                    profileData.name = line.replace('姓名：', '').trim();
-                } else if (line.includes('職稱：')) {
-                    profileData.title = line.replace('職稱：', '').trim();
-                } else if (line.includes('專業領域：')) {
-                    profileData.expertise = line.replace('專業領域：', '').trim();
-                } else if (line.includes('學歷：')) {
-                    profileData.education = line.replace('學歷：', '').trim();
-                } else if (line.includes('聯絡信箱：')) {
-                    profileData.email = line.replace('聯絡信箱：', '').trim();
-                } else if (line.includes('關於我：')) {
-                    profileData.about = line.replace('關於我：', '').trim();
-                } else if (line.includes('電子郵件：')) {
-                    profileData.contactEmail = line.replace('電子郵件：', '').trim();
-                } else if (line.includes('電話：')) {
-                    profileData.phone = line.replace('電話：', '').trim();
-                } else if (line.includes('位置：')) {
-                    profileData.location = line.replace('位置：', '').trim().replace('  ', '<br>');
-                }
-            });
-        }
-
-        // Fallback default data
-        function useDefaultData() {
-            profileData = {
-                name: "載入失敗",
-                title: "載入失敗",
-                expertise: "載入失敗",
-                education: "載入失敗",
-                email: "載入失敗",
-                about: "載入失敗",
-                contactEmail: "載入失敗",
-                phone: "載入失敗",
-                location: "載入失敗"
-            };
-        }
-
-        // Load profile data from external source
+        // Load profile data
         function loadProfileData() {
             // Update home section
-            if (profileData.name) {
-                document.getElementById('name').textContent = profileData.name;
-            }
-            if (profileData.title) {
-                document.getElementById('title').textContent = profileData.title;
-            }
-            if (profileData.expertise) {
-                document.getElementById('expertise').textContent = profileData.expertise;
-            }
-            if (profileData.education) {
-                document.getElementById('education').textContent = profileData.education;
-            }
-            if (profileData.email) {
-                document.getElementById('email').textContent = profileData.email;
-                document.getElementById('email').href = `mailto:${profileData.email}`;
-            }
+            document.getElementById('name').textContent = profileData.name;
+            document.getElementById('title').textContent = profileData.title;
+            document.getElementById('expertise').textContent = profileData.expertise;
+            document.getElementById('education').textContent = profileData.education;
+            document.getElementById('email').textContent = profileData.email;
+            document.getElementById('email').href = `mailto:${profileData.email}`;
 
             // Update about section
-            if (profileData.about) {
-                document.getElementById('about-text').textContent = profileData.about;
-            }
+            document.getElementById('about-text').textContent = profileData.about;
 
             // Update contact section
             const contactEmail = profileData.contactEmail || profileData.email;
-            if (contactEmail) {
-                document.getElementById('contact-email1').textContent = contactEmail;
-                document.getElementById('contact-email1').href = `mailto:${contactEmail}`;
-            }
-            if (profileData.phone) {
-                document.getElementById('contact-phone').textContent = profileData.phone;
-            }
-            if (profileData.location) {
-                document.getElementById('contact-location').innerHTML = profileData.location;
-            }
+            document.getElementById('contact-email1').textContent = contactEmail;
+            document.getElementById('contact-email1').href = `mailto:${contactEmail}`;
+            document.getElementById('contact-phone').textContent = profileData.phone;
+            document.getElementById('contact-location').innerHTML = profileData.location;
         }
 
         // Filter and render projects
