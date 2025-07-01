@@ -10,158 +10,296 @@
     <link rel="icon" type="image/x-icon" href="/pic/favicon.ico">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">2025 AI</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html#home">首頁</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.html#about">關於我</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.html#projects">我的專案</a></li>
-                <li class="nav-item"><a class="nav-link" href="index.html#contact">聯絡我</a></li>
-            </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">2025 AI</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">關於我</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#projects">我的專案</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#publications">學術發表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">聯絡我</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<section class="project-header">
-    <div class="container">
-        <a href="index.html#projects" class="back-btn">
-            <i class="fas fa-arrow-left"></i> 返回專案列表
-        </a>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-                <li class="breadcrumb-item"><a href="index.html#projects">專案</a></li>
-                <li class="breadcrumb-item active" id="breadcrumb-unit">Unit</li>
-            </ol>
-        </nav>
-        <h1 class="project-title" id="project-title">Unit</h1>
-        <p class="project-subtitle" id="project-subtitle">單元作業</p>
-    </div>
-</section>
+    <!-- Project Header -->
+    <section class="project-header">
+        <div class="container">
+            <a href="index.html#projects" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回專案列表</span>
+            </a>
 
-<div class="container">
-    <section class="content-section fade-in">
-        <h2 class="section-title">作業展示</h2>
-        <div class="image-gallery">
-            <div class="gallery-grid" id="gallery-grid"></div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">首頁</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html#projects">專案</a>
+                    </li>
+                    <li class="breadcrumb-item active" id="breadcrumb-unit">Unit</li>
+                </ol>
+            </nav>
+
+            <h1 class="project-title" id="project-title">Unit</h1>
+            <p class="project-subtitle" id="project-subtitle">
+                單元作業
+            </p>
         </div>
     </section>
-</div>
 
-<div class="modal fade" id="imageModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="imageModalTitle">專案圖片</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Image Gallery -->
+        <section class="content-section fade-in">
+            <h2 class="section-title">作業展示</h2>
+            <div class="image-gallery">
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Images will be dynamically generated -->
+                </div>
             </div>
-            <div class="modal-body text-center">
-                <img id="modalImage" src="" alt="Project Image" class="img-fluid">
-                <p class="mt-3" id="imageDescription"></p>
+        </section>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalTitle">專案圖片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Project Image" class="img-fluid">
+                    <p class="mt-3" id="imageDescription"></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script>
-const unitData = {
-    1: ['網頁, MediaPipe, 環境', '其他工具專案、感知型AI'],
-    2: ['CV2', '其他工具專案'],
-    3: ['Object Detection', '感知型AI'],
-    4: ['Image Segmentation', '感知型AI'],
-    5: ['Face Detection', '感知型AI'],
-    6: ['Face Landmark Detection', '感知型AI'],
-    7: ['Pose Landmark Detection', '感知型AI'],
-    8: ['Hand Landmarks', '感知型AI'],
-    9: ['Gesture recognition', '感知型AI'],
-    10: ['Streamlit', '其他工具專案'],
-    11: ['Local LLM', '生成型AI'],
-    12: ['Neural Style Transfer', '生成型AI'],
-    13: ['Torch', '生成型AI'],
-    14: ['Arbitrary-image Real time NST', '生成型AI'],
-    15: ['YOLO', '感知型AI'],
-    16: ['Using Python call LLM API', '生成型AI'],
-    17: ['從頭打造 LLM', '生成型AI'],
-    18: ['RAG 簡介、LangChain', '生成型AI'],
-    19: ['AI Agent, MCP, n8n', '代理型AI'],
-    20: ['進階 n8n', '代理型AI']
-};
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentUnit = 1;
+        let images = [];
 
-let currentUnit = 1;
-let images = [];
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get unit number from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            currentUnit = parseInt(urlParams.get('unit')) || 1;
 
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    currentUnit = parseInt(urlParams.get('unit')) || 1;
-    if (currentUnit < 1 || currentUnit > 20) currentUnit = 1;
+            // Validate unit number (1-20) - Updated to support 20 units
+            if (currentUnit < 1 || currentUnit > 20) {
+                currentUnit = 1;
+            }
 
-    const [title, category] = unitData[currentUnit] || ['未知單元', ''];
+            // Update page title and content
+            updatePageContent();
 
-    document.title = `Unit #${currentUnit} - ${title} | 2025 AI`;
-    document.getElementById('breadcrumb-unit').textContent = `Unit #${currentUnit}`;
-    document.getElementById('project-title').textContent = `Unit #${currentUnit}：${title}`;
-    document.getElementById('project-subtitle').textContent = `類別：${category}`;
+            // Generate images for this unit
+            generateImages();
 
-    generateImages();
-    renderGallery();
-});
+            // Render gallery
+            renderGallery();
 
-function generateImages() {
-    images = [];
-    for (let i = 1; i <= 3; i++) {
-        images.push({
-            src: `pic/unit${currentUnit}_${i}.jpg`,
-            title: `第${i}張圖片`,
-            description: `第${currentUnit}單元作業第${i}張圖`
+            initScrollAnimations();
         });
-    }
-}
 
-function renderGallery() {
-    const galleryGrid = document.getElementById('gallery-grid');
-    galleryGrid.innerHTML = images.map((img, idx) => `
-        <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage(${idx})">
-            <img src="${img.src}" alt="Unit ${currentUnit} Image ${idx + 1}">
-            <div class="gallery-overlay">
-                <h5>unit${currentUnit}_${idx + 1}</h5>
-                <p>${img.title}</p>
-            </div>
-        </div>
-    `).join('');
-}
+        // Unit information with names and attributes
+        const unitInfo = {
+            1: { name: "網頁, MediaPipe, 環境", attributes: ["其他工具專案", "感知型AI"] },
+            2: { name: "CV2", attributes: ["其他工具專案"] },
+            3: { name: "Object Detection", attributes: ["感知型AI"] },
+            4: { name: "Image Segmentation", attributes: ["感知型AI"] },
+            5: { name: "Face Detection", attributes: ["感知型AI"] },
+            6: { name: "Face Landmark Detection", attributes: ["感知型AI"] },
+            7: { name: "Pose Landmark Detection", attributes: ["感知型AI"] },
+            8: { name: "Hand Landmarks", attributes: ["感知型AI"] },
+            9: { name: "Gesture recognition", attributes: ["感知型AI"] },
+            10: { name: "Streamlit", attributes: ["其他工具專案"] },
+            11: { name: "Local LLM", attributes: ["生成型AI"] },
+            12: { name: "Neural Style Transfer", attributes: ["生成型AI"] },
+            13: { name: "Torch", attributes: ["生成型AI"] },
+            14: { name: "Arbitrary-image Real time NST", attributes: ["生成型AI"] },
+            15: { name: "YOLO", attributes: ["感知型AI"] },
+            16: { name: "Using Python call LLM API", attributes: ["生成型AI"] },
+            17: { name: "從頭打造 LLM", attributes: ["生成型AI"] },
+            18: { name: "RAG 簡介、LangChain", attributes: ["生成型AI"] },
+            19: { name: "AI Agent, MCP, n8n", attributes: ["代理型AI"] },
+            20: { name: "進階 n8n", attributes: ["代理型AI"] }
+        };
 
-function showImage(index) {
-    const image = images[index];
-    document.getElementById('modalImage').src = image.src;
-    document.getElementById('imageModalTitle').textContent = '專案圖片';
-    document.getElementById('imageDescription').textContent = image.description;
-}
-</script>
+        // Update page content based on unit number
+        function updatePageContent() {
+            const unit = unitInfo[currentUnit];
+            const unitText = `Unit #${currentUnit}`;
+            const unitFullTitle = `${unitText}: ${unit.name}`;
+            const subtitleText = `第${currentUnit}單元的作業 - ${unit.attributes.join('、')}`;
+            const titleText = `${unitFullTitle} - 專案詳情 | 2025 AI`;
+
+            // Update page title
+            document.title = titleText;
+
+            // Update breadcrumb
+            document.getElementById('breadcrumb-unit').textContent = unitFullTitle;
+
+            // Update project title
+            document.getElementById('project-title').textContent = unitFullTitle;
+
+            // Update project subtitle
+            document.getElementById('project-subtitle').textContent = subtitleText;
+        }
+
+        // Generate images array for current unit
+        function generateImages() {
+            const unit = unitInfo[currentUnit];
+            images = [];
+            for (let i = 1; i <= 3; i++) {
+                const imageData = {
+                    src: `pic/unit${currentUnit}_${i}.jpg`,
+                    title: `${unit.name} - 第${i}張圖片`,
+                    description: `Unit #${currentUnit}: ${unit.name} 的第${i}張作業圖片 (${unit.attributes.join('、')})`
+                };
+                images.push(imageData);
+            }
+        }
+
+        // Render gallery based on current unit
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            const unit = unitInfo[currentUnit];
+
+            galleryGrid.innerHTML = images.map((image, index) => {
+                const title = image.title;
+                const fileName = `unit${currentUnit}_${index + 1}`;
+                const attributeBadges = unit.attributes.map(attr => {
+                    const badgeClass = attr.includes('感知型') ? 'bg-primary' : 
+                                     attr.includes('生成型') ? 'bg-success' : 
+                                     attr.includes('代理型') ? 'bg-warning' : 'bg-secondary';
+                    return `<span class="badge ${badgeClass} me-1">${attr}</span>`;
+                }).join('');
+
+                return `
+                    <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="showImage(${index})">
+                        <img src="${image.src}" alt="Unit ${currentUnit} - Image ${index + 1}">
+                        <div class="gallery-overlay">
+                            <h5>${fileName}</h5>
+                            <p>${unit.name}</p>
+                            <div class="mt-2">${attributeBadges}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Show image in modal
+        function showImage(index) {
+            const image = images[index];
+            const modalImage = document.getElementById('modalImage');
+            const imageDescription = document.getElementById('imageDescription');
+
+            modalImage.src = image.src;
+            imageDescription.textContent = image.description;
+        }
+
+        // Scroll animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 70;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255,255,255,0.98)';
+            } else {
+                navbar.style.background = 'rgba(255,255,255,0.95)';
+            }
+        });
+    </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     fetch(`YoutubeLink/unit${currentUnit}.txt`)
-        .then(response => response.ok ? response.text() : '')
+        .then(response => {
+            if (!response.ok) throw new Error("No YouTube link found.");
+            return response.text();
+        })
         .then(text => {
             const firstLine = text.trim().split('\n')[0];
             if (firstLine.includes("youtube") || firstLine.includes("youtu.be")) {
-                const videoId = firstLine.includes("youtu.be") ? firstLine.split("youtu.be/")[1] : firstLine.split("v=")[1].split("&")[0];
+                const videoId = firstLine.includes("youtu.be")
+                    ? firstLine.split("youtu.be/")[1]
+                    : firstLine.split("v=")[1].split("&")[0];
                 const iframeHTML = `
                     <div class="container mt-5 mb-5">
                         <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/${videoId}" title="YouTube video" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                    title="YouTube video" allowfullscreen></iframe>
                         </div>
                     </div>`;
                 document.body.insertAdjacentHTML("beforeend", iframeHTML);
             }
         })
-        .catch(() => console.log("No YouTube video for this unit."));
+        .catch(err => {
+            console.log("No YouTube video for this unit.");
+        });
 });
 </script>
+
 </body>
 </html>
