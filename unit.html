@@ -8,6 +8,179 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="/pic/favicon.ico">
+    <style>
+        /* Unit Navigation Styles */
+        .unit-nav-container {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .unit-nav-left {
+            left: 20px;
+        }
+
+        .unit-nav-right {
+            right: 20px;
+        }
+
+        .unit-nav-btn {
+            background: rgba(255, 107, 157, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .unit-nav-btn:hover {
+            background: rgba(255, 107, 157, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .unit-nav-btn:disabled {
+            background: rgba(200, 200, 200, 0.5);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .unit-nav-btn:disabled:hover {
+            transform: none;
+            background: rgba(200, 200, 200, 0.5);
+        }
+
+        /* Unit Info Tooltip */
+        .unit-nav-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .unit-nav-left .unit-nav-tooltip {
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .unit-nav-right .unit-nav-tooltip {
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .unit-nav-btn:hover .unit-nav-tooltip {
+            opacity: 1;
+        }
+
+        /* Unit Counter */
+        .unit-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 107, 157, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .unit-nav-container {
+                position: fixed;
+                top: auto;
+                bottom: 100px;
+                transform: none;
+            }
+
+            .unit-nav-left {
+                left: 20px;
+            }
+
+            .unit-nav-right {
+                right: 20px;
+            }
+
+            .unit-nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .unit-nav-tooltip {
+                display: none;
+            }
+
+            .unit-counter {
+                bottom: 20px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Keyboard Navigation Hint */
+        .keyboard-hint {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: #666;
+            z-index: 999;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            opacity: 0;
+            animation: fadeInHint 0.5s ease 2s forwards;
+        }
+
+        @keyframes fadeInHint {
+            to { opacity: 1; }
+        }
+
+        .keyboard-hint .hint-close {
+            position: absolute;
+            top: -5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .keyboard-hint {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -40,6 +213,33 @@
             </div>
         </div>
     </nav>
+
+    <!-- Unit Navigation - Left -->
+    <div class="unit-nav-container unit-nav-left">
+        <button class="unit-nav-btn" id="prevUnitBtn" onclick="navigateToUnit(currentUnit - 1)">
+            <i class="fas fa-chevron-left"></i>
+            <div class="unit-nav-tooltip" id="prevUnitTooltip">Unit 1</div>
+        </button>
+    </div>
+
+    <!-- Unit Navigation - Right -->
+    <div class="unit-nav-container unit-nav-right">
+        <button class="unit-nav-btn" id="nextUnitBtn" onclick="navigateToUnit(currentUnit + 1)">
+            <i class="fas fa-chevron-right"></i>
+            <div class="unit-nav-tooltip" id="nextUnitTooltip">Unit 3</div>
+        </button>
+    </div>
+
+    <!-- Unit Counter -->
+    <div class="unit-counter" id="unitCounter">
+        Unit 1 / 20
+    </div>
+
+    <!-- Keyboard Navigation Hint -->
+    <div class="keyboard-hint" id="keyboardHint">
+        <button class="hint-close" onclick="closeHint()">&times;</button>
+        💡 使用 ← → 鍵快速切換 Unit
+    </div>
 
     <!-- Project Header -->
     <section class="project-header">
@@ -102,6 +302,7 @@
     <script>
         let currentUnit = 1;
         let images = [];
+        const totalUnits = 20;
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
@@ -109,8 +310,8 @@
             const urlParams = new URLSearchParams(window.location.search);
             currentUnit = parseInt(urlParams.get('unit')) || 1;
 
-            // Validate unit number (1-20) - Updated to support 20 units
-            if (currentUnit < 1 || currentUnit > 20) {
+            // Validate unit number (1-20)
+            if (currentUnit < 1 || currentUnit > totalUnits) {
                 currentUnit = 1;
             }
 
@@ -123,7 +324,11 @@
             // Render gallery
             renderGallery();
 
+            // Update navigation
+            updateNavigation();
+
             initScrollAnimations();
+            initKeyboardNavigation();
         });
 
         // Unit information with names and attributes
@@ -149,6 +354,83 @@
             19: { name: "AI Agent, MCP, n8n", attributes: ["代理型AI"] },
             20: { name: "進階 n8n", attributes: ["代理型AI"] }
         };
+
+        // Navigate to specific unit
+        function navigateToUnit(unitNumber) {
+            if (unitNumber >= 1 && unitNumber <= totalUnits && unitNumber !== currentUnit) {
+                window.location.href = `unit.html?unit=${unitNumber}`;
+            }
+        }
+
+        // Update navigation buttons and tooltips
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevUnitBtn');
+            const nextBtn = document.getElementById('nextUnitBtn');
+            const prevTooltip = document.getElementById('prevUnitTooltip');
+            const nextTooltip = document.getElementById('nextUnitTooltip');
+            const unitCounter = document.getElementById('unitCounter');
+
+            // Update counter
+            unitCounter.textContent = `Unit ${currentUnit} / ${totalUnits}`;
+
+            // Update previous button
+            if (currentUnit > 1) {
+                prevBtn.disabled = false;
+                const prevUnit = unitInfo[currentUnit - 1];
+                prevTooltip.textContent = `Unit ${currentUnit - 1}: ${prevUnit.name}`;
+            } else {
+                prevBtn.disabled = true;
+                prevTooltip.textContent = '已經是第一個 Unit';
+            }
+
+            // Update next button
+            if (currentUnit < totalUnits) {
+                nextBtn.disabled = false;
+                const nextUnit = unitInfo[currentUnit + 1];
+                nextTooltip.textContent = `Unit ${currentUnit + 1}: ${nextUnit.name}`;
+            } else {
+                nextBtn.disabled = true;
+                nextTooltip.textContent = '已經是最後一個 Unit';
+            }
+        }
+
+        // Initialize keyboard navigation
+        function initKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                // Ignore if user is typing in an input field
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        if (currentUnit > 1) {
+                            navigateToUnit(currentUnit - 1);
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        if (currentUnit < totalUnits) {
+                            navigateToUnit(currentUnit + 1);
+                        }
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        navigateToUnit(1);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        navigateToUnit(totalUnits);
+                        break;
+                }
+            });
+        }
+
+        // Close keyboard hint
+        function closeHint() {
+            document.getElementById('keyboardHint').style.display = 'none';
+        }
 
         // Update page content based on unit number
         function updatePageContent() {
@@ -272,34 +554,34 @@
         });
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch(`YoutubeLink/unit${currentUnit}.txt`)
-        .then(response => {
-            if (!response.ok) throw new Error("No YouTube link found.");
-            return response.text();
-        })
-        .then(text => {
-            const firstLine = text.trim().split('\n')[0];
-            if (firstLine.includes("youtube") || firstLine.includes("youtu.be")) {
-                const videoId = firstLine.includes("youtu.be")
-                    ? firstLine.split("youtu.be/")[1]
-                    : firstLine.split("v=")[1].split("&")[0];
-                const iframeHTML = `
-                    <div class="container mt-5 mb-5">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                    title="YouTube video" allowfullscreen></iframe>
-                        </div>
-                    </div>`;
-                document.body.insertAdjacentHTML("beforeend", iframeHTML);
-            }
-        })
-        .catch(err => {
-            console.log("No YouTube video for this unit.");
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch(`YoutubeLink/unit${currentUnit}.txt`)
+                .then(response => {
+                    if (!response.ok) throw new Error("No YouTube link found.");
+                    return response.text();
+                })
+                .then(text => {
+                    const firstLine = text.trim().split('\n')[0];
+                    if (firstLine.includes("youtube") || firstLine.includes("youtu.be")) {
+                        const videoId = firstLine.includes("youtu.be")
+                            ? firstLine.split("youtu.be/")[1]
+                            : firstLine.split("v=")[1].split("&")[0];
+                        const iframeHTML = `
+                            <div class="container mt-5 mb-5">
+                                <div class="ratio ratio-16x9">
+                                    <iframe src="https://www.youtube.com/embed/${videoId}" 
+                                            title="YouTube video" allowfullscreen></iframe>
+                                </div>
+                            </div>`;
+                        document.body.insertAdjacentHTML("beforeend", iframeHTML);
+                    }
+                })
+                .catch(err => {
+                    console.log("No YouTube video for this unit.");
+                });
         });
-});
-</script>
+    </script>
 
 </body>
 </html>
