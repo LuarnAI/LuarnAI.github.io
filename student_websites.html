@@ -363,8 +363,18 @@
 
         let filteredStudents = [...students];
 
-        function getPhotoUrl(website) {
-            // 確保網址以 / 結尾
+        function getPhotoUrl(website, studentName) {
+            // 特殊情況處理
+            if (studentName === "韓玉森") {
+                const baseUrl = website.endsWith('/') ? website : website + '/';
+                return baseUrl + 'pic/hanson.png';
+            }
+            if (studentName === "蔡宜秀") {
+                const baseUrl = website.endsWith('/') ? website : website + '/';
+                return baseUrl + 'pic/Ellenpic.jpg';
+            }
+            
+            // 一般情況：使用 mypic.jpg
             const baseUrl = website.endsWith('/') ? website : website + '/';
             return baseUrl + 'pic/mypic.jpg';
         }
@@ -381,7 +391,7 @@
                 noResults.style.display = 'none';
                 
                 grid.innerHTML = studentList.map(student => {
-                    const photoUrl = getPhotoUrl(student.website);
+                    const photoUrl = getPhotoUrl(student.website, student.name);
                     return `
                     <div class="student-card">
                         <img src="${photoUrl}" 
