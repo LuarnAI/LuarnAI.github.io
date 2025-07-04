@@ -267,19 +267,19 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <div class="stat-card">
-                            <div class="stat-number" id="totalStudents">42</div>
+                            <div class="stat-number" id="totalStudents">43</div>
                             <div class="stat-label">總學生數</div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="stat-card">
-                            <div class="stat-number" id="activeWebsites">42</div>
+                            <div class="stat-number" id="activeWebsites">43</div>
                             <div class="stat-label">個人網站</div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="stat-card">
-                            <div class="stat-number" id="displayedCount">42</div>
+                            <div class="stat-number" id="displayedCount">43</div>
                             <div class="stat-label">顯示中</div>
                         </div>
                     </div>
@@ -308,7 +308,7 @@
             
             <!-- Footer -->
             <div class="footer">
-                <p><i class="fas fa-graduation-cap"></i> 更新時間：2025年7月1日 | 共 42 位學生 (已去除重複提交)</p>
+                <p><i class="fas fa-graduation-cap"></i> 更新時間：2025年7月4日 | 共 43 位學生 (已去除重複提交)</p>
             </div>
         </div>
     </div>
@@ -358,7 +358,8 @@
             { name: "鍾錦琳", studentId: "M11309919", website: "https://kentchung66.github.io/" },
             { name: "謝錦枝", studentId: "M11008923", website: "https://aasweet.github.io/" },
             { name: "黃志源", studentId: "m11308921", website: "https://dollars2343.github.io/" },
-            { name: "林金弘", studentId: "M11308925", website: "https://m11308925.github.io" }
+            { name: "林金弘", studentId: "M11308925", website: "https://m11308925.github.io" },
+            { name: "阮于齡", studentId: "M11109918", website: "https://eunice918.github.io/" }
         ];
 
         let filteredStudents = [...students];
@@ -372,6 +373,14 @@
             if (studentName === "蔡宜秀") {
                 const baseUrl = website.endsWith('/') ? website : website + '/';
                 return baseUrl + 'pic/Ellenpic.jpg';
+            }
+            if (studentName === "練家豪") {
+                // 使用 GitHub avatar 代替
+                return 'https://avatars.githubusercontent.com/u/574818?v=4';
+            }
+            if (studentName === "陳惠文(艾薇)") {
+                // 使用 GitHub 上的圖片
+                return 'https://github.com/ichen42025/ichen42025.githup.io/blob/main/pic/mypic.jpg';
             }
             
             // 一般情況：使用 mypic.jpg
