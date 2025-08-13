@@ -316,7 +316,7 @@
                 <h1><i class="fas fa-robot me-2"></i>AI 智能助理</h1>
                 <div class="chat-status">
                     <i class="fas fa-sparkles me-1"></i>
-                    由 N8N + Ollama = gpt-oss:20b驅動的智能對話系統
+                    N8N + Ollama + gpt-oss:20b 智能對話系統
                 </div>
             </div>
 
@@ -394,8 +394,8 @@
             updateConnectionStatus() {
                 if (!this.webhookUrl) {
                     this.statusIndicator.classList.add('disconnected');
-                    this.statusText.textContent = '請設置 Webhook URL';
-                    this.showError('請在程式碼中設置您的 N8N webhook URL');
+                    this.statusText.textContent = '設置 Webhook URL ...';
+                    this.showError('正在程式中設置 N8N webhook URL...');
                 } else {
                     this.statusIndicator.classList.remove('disconnected');
                     this.statusText.textContent = '已連接';
