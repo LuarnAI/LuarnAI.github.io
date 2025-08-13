@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能助理</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --chat-bg: #f8f9fa;
+            --user-bubble: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --ai-bubble: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 2rem auto;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 300%;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .chat-status {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            background: var(--chat-bg);
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.ai {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .message.user .message-bubble {
+            background: var(--user-bubble);
+            border-bottom-right-radius: 8px;
+        }
+
+        .message.ai .message-bubble {
+            background: var(--ai-bubble);
+            border-bottom-left-radius: 8px;
+            color: #333;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.8rem;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .message.user .message-avatar {
+            background: var(--user-bubble);
+            color: white;
+            order: 2;
+        }
+
+        .message.ai .message-avatar {
+            background: var(--ai-bubble);
+            color: #333;
+        }
+
+        .chat-input-area {
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            background: white;
+        }
+
+        .btn-send {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .welcome-message {
+            text-align: center;
+            color: #6c757d;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .welcome-message i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 1rem;
+                border-radius: 15px;
+                min-height: calc(100vh - 2rem);
+            }
+            
+            .message-bubble {
+                max-width: 85%;
+            }
+            
+            .chat-messages {
+                padding: 1rem;
+            }
+        }
+
+        .connection-status {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ecdc4;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.disconnected {
+            background: #ff6b6b;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="connection-status">
+                    <div class="status-indicator" id="statusIndicator"></div>
+                    <span id="statusText">已連接</span>
+                </div>
+                <h1><i class="fas fa-robot me-2"></i>AI 智能助理</h1>
+                <div class="chat-status">
+                    <i class="fas fa-sparkles me-1"></i>
+                    由 N8N + Ollama 驅動的智能對話系統
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <i class="fas fa-comments"></i>
+                    <h4>歡迎使用 AI 助理！</h4>
+                    <p>我是您的智能助手，可以幫您回答問題、搜尋資訊，或者進行自然對話。</p>
+                    <p>請輸入您的問題或想法，讓我們開始聊天吧！</p>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <div class="input-group">
+                    <input type="text" 
+                           class="form-control" 
+                           id="messageInput" 
+                           placeholder="輸入您的訊息..."
+                           autocomplete="off">
+                    <button class="btn btn-send" 
+                            id="sendButton" 
+                            type="button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="mt-2 text-muted small text-center">
+                    <i class="fas fa-info-circle me-1"></i>
+                    按 Enter 鍵快速發送訊息
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        class ChatInterface {
+            constructor() {
+                this.sessionId = this.generateSessionId();
+                this.isTyping = false;
+                this.webhookUrl = ''; // 請在這裡設置您的 N8N webhook URL
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.updateConnectionStatus();
+            }
+
+            generateSessionId() {
+                return 'web_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            initializeElements() {
+                this.chatMessages = document.getElementById('chatMessages');
+                this.messageInput = document.getElementById('messageInput');
+                this.sendButton = document.getElementById('sendButton');
+                this.statusIndicator = document.getElementById('statusIndicator');
+                this.statusText = document.getElementById('statusText');
+            }
+
+            bindEvents() {
+                this.sendButton.addEventListener('click', () => this.sendMessage());
+                this.messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                // 自動調整輸入框高度
+                this.messageInput.addEventListener('input', () => {
+                    this.messageInput.style.height = 'auto';
+                    this.messageInput.style.height = this.messageInput.scrollHeight + 'px';
+                });
+            }
+
+            updateConnectionStatus() {
+                if (!this.webhookUrl) {
+                    this.statusIndicator.classList.add('disconnected');
+                    this.statusText.textContent = '請設置 Webhook URL';
+                    this.showError('請在程式碼中設置您的 N8N webhook URL');
+                } else {
+                    this.statusIndicator.classList.remove('disconnected');
+                    this.statusText.textContent = '已連接';
+                }
+            }
+
+            async sendMessage() {
+                const message = this.messageInput.value.trim();
+                if (!message || this.isTyping) return;
+
+                if (!this.webhookUrl) {
+                    this.showError('請先設置 N8N webhook URL');
+                    return;
+                }
+
+                // 清除歡迎訊息
+                const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
+                if (welcomeMessage) {
+                    welcomeMessage.remove();
+                }
+
+                // 添加用戶訊息
+                this.addMessage(message, 'user');
+                this.messageInput.value = '';
+                this.messageInput.style.height = 'auto';
+
+                // 顯示正在輸入指示器
+                this.showTypingIndicator();
+
+                try {
+                    const response = await this.callN8NWebhook(message);
+                    this.hideTypingIndicator();
+                    
+                    if (response.success && response.message) {
+                        this.addMessage(response.message, 'ai');
+                    } else {
+                        throw new Error('無效的回應格式');
+                    }
+                } catch (error) {
+                    this.hideTypingIndicator();
+                    console.error('發送訊息錯誤:', error);
+                    this.addMessage('抱歉，發生了錯誤。請稍後再試。', 'ai');
+                    this.showError('連接失敗，請檢查網路連接或 webhook 設定');
+                }
+            }
+
+            async callN8NWebhook(message) {
+                const requestData = {
+                    message: message,
+                    sessionId: this.sessionId,
+                    timestamp: new Date().toISOString()
+                };
+
+                const response = await fetch(this.webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                return await response.json();
+            }
+
+            addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+
+                const bubble = document.createElement('div');
+                bubble.className = 'message-bubble';
+                bubble.textContent = text;
+
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(bubble);
+
+                this.chatMessages.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            showTypingIndicator() {
+                this.isTyping = true;
+                this.sendButton.disabled = true;
+
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.innerHTML = `
+                    <i class="fas fa-robot"></i>
+                    <span>AI 正在思考</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                `;
+
+                this.chatMessages.appendChild(typingDiv);
+                this.scrollToBottom();
+            }
+
+            hideTypingIndicator() {
+                this.isTyping = false;
+                this.sendButton.disabled = false;
+
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle me-2"></i>${message}`;
+                
+                this.chatMessages.appendChild(errorDiv);
+                this.scrollToBottom();
+
+                // 3秒後自動移除錯誤訊息
+                setTimeout(() => {
+                    if (errorDiv.parentNode) {
+                        errorDiv.remove();
+                    }
+                }, 3000);
+            }
+
+            scrollToBottom() {
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+
+            // 公開方法供用戶設置 webhook URL
+            setWebhookUrl(url) {
+                this.webhookUrl = url;
+                this.updateConnectionStatus();
+                console.log('Webhook URL 已設置:', url);
+            }
+        }
+
+        // 初始化聊天介面
+        const chat = new ChatInterface();
+
+        // 使用方法：
+        // 請將下面的 URL 替換為您的實際 N8N webhook URL
+        chat.setWebhookUrl('https://88c7648c7a88.ngrok-free.app/webhook/chat');
+
+        // 範例：如果您的 N8N 運行在本地
+        // chat.setWebhookUrl('http://localhost:5678/webhook/chat');
+
+        console.log('聊天介面已初始化！');
+        console.log('請使用 chat.setWebhookUrl("您的webhook網址") 來設置連接');
+    </script>
+</body>
+</html>
