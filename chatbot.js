@@ -2,7 +2,7 @@
 class ChatBot {
     constructor() {
         // ⚠️ 重要：請替換為您的 n8n webhook URL
-        this.webhookUrl = 'https://joey-content-fawn.ngrok-free.app/webhook/chat';
+        this.webhookUrl = 'https://labrador-harmless-dove.ngrok-free.app/webhook/chat';
         
         // 初始化 session ID
         this.sessionId = this.getOrCreateSessionId();
