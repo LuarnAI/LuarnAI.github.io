@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欒老師 Dr. Luarn - 教室資訊看板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 SheetJS 用於讀取 Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;800&family=JetBrains+Mono:wght@700&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #020617;
+        }
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        .depth-3d {
+            transform: perspective(1000px) rotateX(2deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .btn-3d {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2), 0 15px 20px rgba(0,0,0,0.3);
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.3);
+        }
+        .glass-texture {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(20px);
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
+
+        /* 粉彩色系慢速循環動畫 (包含粉紅、粉藍、粉綠、粉黃) */
+        @keyframes pastel-shift {
+            0%, 100% { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+            20% { color: #ffd1dc; text-shadow: 0 0 35px rgba(255,209,220,0.5); } /* 粉紅 */
+            40% { color: #b3e5fc; text-shadow: 0 0 35px rgba(179,229,252,0.5); } /* 粉藍 */
+            60% { color: #c8e6c9; text-shadow: 0 0 35px rgba(200,230,201,0.5); } /* 粉綠 */
+            80% { color: #fff9c4; text-shadow: 0 0 35px rgba(255,249,196,0.5); } /* 粉黃 */
+        }
+        .text-pastel-cycle {
+            animation: pastel-shift 24s ease-in-out infinite;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-label { font-size: 3.5rem !important; }
+            .main-time { font-size: 6rem !important; }
+            .title-area { top: 1rem !important; scale: 0.6; }
+            .avatar-box { width: 6rem !important; height: 6rem !important; top: 1rem !important; left: 1rem !important; }
+            .toolbar-inner { flex-wrap: wrap; justify-content: center; gap: 0.5rem !important; }
+            .main-container { margin-top: 6rem !important; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

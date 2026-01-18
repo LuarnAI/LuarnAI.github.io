@@ -1,0 +1,5 @@
+{
+  "name": "Dr. Luarn Classroom Tool - 獨立運行版",
+  "description": "單一 HTML 檔案實現的教室資訊看板，支援響應式佈局與離線存儲，無須編譯即可直接運行。",
+  "requestFramePermissions": []
+}
