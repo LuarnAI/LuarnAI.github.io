@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          # 移除 cache 設定，因為網頁上傳通常沒有 package-lock.json，會導致找不到檔案的錯誤
+          # cache: 'npm'
+          # cache-dependency-path: 'Classroom Tools/package-lock.json'
+          
+      - name: Install dependencies
+        # 新增：指定工作目錄為您建立的資料夾
+        working-directory: 'Classroom Tools'
+        run: |
+          npm install
+          npm install vite-plugin-pwa -D
+        
+      - name: Build
+        # 新增：指定工作目錄為您建立的資料夾
+        working-directory: 'Classroom Tools'
+        run: npm run build
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 修正：指定編譯後的檔案路徑 (位於子資料夾內的 dist)
+          path: 'Classroom Tools/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
