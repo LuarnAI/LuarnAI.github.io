@@ -38,5 +38,6 @@ export default defineConfig({
       }
     })
   ],
-  base: '/schooltool/', // 根據您的 repository 名稱調整
+  base: '/luarnsch/', // 根據您的 repository 名稱調整
 })
+
