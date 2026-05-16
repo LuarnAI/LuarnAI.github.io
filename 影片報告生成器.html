@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣夜市文化專題報告 - 2024 趨勢分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        accent: {
+                            red: '#ef4444',
+                            gold: '#fbbf24',
+                            indigo: '#6366f1'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        display: ['Outfit', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24 0%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 640px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .video-container {
+            position: relative;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        video {
+            width: 100%;
+            border-radius: 16px;
+            object-fit: cover;
+        }
+        audio::-webkit-media-controls-panel {
+            background-color: rgba(30, 41, 59, 0.9);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="relative pt-12 pb-8 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <span class="inline-block px-4 py-1 mb-4 text-xs font-bold tracking-widest uppercase bg-accent-red/20 text-accent-red rounded-full border border-accent-red/30">
+                Exclusive Insight
+            </span>
+            <h1 class="text-5xl md:text-7xl font-display font-extrabold mb-6 tracking-tight">
+                台灣夜市文化<br/><span class="gradient-text">深度探索報告</span>
+            </h1>
+            <p class="text-night-200 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                從街頭美味到全球品牌：探討台灣夜市在後疫情時代的韌性與數位轉型。
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-8 space-y-16 pb-24">
+        
+        <!-- 1. Infographic Section (TOP) -->
+        <section id="infographic" class="scroll-reveal active">
+            <div class="glass-panel overflow-hidden p-2 md:p-4 group">
+                <div class="relative overflow-hidden rounded-2xl">
+                    <img src="https://opal.google/board/blobs/88ac0b2b-d9e0-4ebd-8d76-c60b23140edb" alt="台灣夜市文化資訊圖表" class="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]">
+                    <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none"></div>
+                </div>
+                <div class="mt-4 px-4 py-2 flex flex-wrap gap-4 items-center justify-between">
+                    <h2 class="text-xl font-bold font-display flex items-center gap-2 text-gold-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        數據可視化核心
+                    </h2>
+                    <p class="text-sm text-night-400">涵蓋文化、衛生、數位及未來展望四大領域</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Video/Audio Section (CENTER) -->
+        <section id="media-center" class="scroll-reveal active py-12">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                    <div class="video-container rounded-3xl overflow-hidden border-4 border-night-800 animate-float">
+                        <video controls class="shadow-2xl aspect-video" poster="">
+                            <source src="https://opal.google/board/blobs/99a64c96-edaa-48e9-995b-f02ac2bc2ee2" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-8">
+                        <h3 class="text-3xl font-display font-bold mb-4">沉浸式氛圍體驗</h3>
+                        <p class="text-night-300 mb-8 leading-relaxed">
+                            這段視覺影像捕捉了夜市的動態能量，從炭火的溫度到數位外送的效率，展現傳統與現代的交織。
+                        </p>
+                        
+                        <div class="bg-night-950/50 rounded-2xl p-6 border border-night-800">
+                            <p class="text-sm font-semibold mb-4 text-accent-indigo flex items-center gap-2">
+                                <svg class="w-4 h-4 animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"></path></svg>
+                                播放背景背景音樂
+                            </p>
+                            <audio controls class="w-full opacity-80 hover:opacity-100 transition-opacity">
+                                <source src="https://opal.google/board/blobs/a8fd8cf1-7616-47d9-8002-4c45bc72f256" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Report Section (BOTTOM) -->
+        <section id="full-report" class="scroll-reveal active space-y-12">
+            
+            <!-- Summary Bento -->
+            <div class="bento-grid">
+                <div class="md:col-span-2 glass-panel p-8 border-l-4 border-l-accent-gold">
+                    <h4 class="text-accent-gold font-bold mb-4 flex items-center gap-2">
+                        <span class="w-8 h-[2px] bg-accent-gold"></span> 摘要
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3">
+                            <span class="text-accent-gold mt-1">✦</span>
+                            <span class="text-night-100">夜市美食是台灣觀光的核心動力，具備獨特性、多樣性與深厚的在地文化感。</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-accent-gold mt-1">✦</span>
+                            <span class="text-night-100">食品安全知識與實際衛生行為之間存在落差，硬體設施受限與高熱量營養結構為主要挑戰。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2 glass-panel p-8 border-l-4 border-l-accent-red">
+                    <h4 class="text-accent-red font-bold mb-4 invisible md:visible">.</h4>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3">
+                            <span class="text-accent-red mt-1">✦</span>
+                            <span class="text-night-100">數位轉型在後疫情時代加速，視覺行銷與外送平台整合改變了傳統夜市的營運模式。</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <span class="text-accent-red mt-1">✦</span>
+                            <span class="text-night-100">政府透過文化包裝將地方小吃品牌化，使其成為台灣展現軟實力的重要指標。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="glass-panel p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10 select-none">
+                    <span class="text-9xl font-display font-black tracking-tighter">REPORT</span>
+                </div>
+                
+                <h3 class="text-3xl font-display font-bold mb-10 pb-4 border-b border-white/10 inline-block">報告本文</h3>
+                
+                <div class="prose prose-invert max-w-none space-y-8 text-night-200 leading-relaxed text-lg">
+                    <p>
+                        台灣的夜市（Night Market）文化享譽國際，不僅是庶民生活的重要組成部分，更是吸引國內外旅客的關鍵旅遊資源。根據研究，夜市美食的吸引力源於其「獨特性」與「多樣性」，這種獨特的街頭小吃（Street Food）文化讓遊客在品嚐過程中產生強烈的在地文化感。特別是台式熱炒與各類創新小吃，其知覺價值在國際旅客心中極高，是驅動重遊意願的核心因素。此外，夜市美食已不單是地方飲食，透過標準化與品牌化的轉譯，如珍珠奶茶與雞排等品項已成功輸出全球，成為代表台灣文化認同（Cultural Identity）與外交影響力的軟實力（Soft Power）象徵。
+                    </p>
+                    
+                    <p>
+                        然而，在夜市繁榮的背後，衛生與健康課題始終是產業發展的挑戰。在食品安全（Food Safety）方面，研究發現雖然多數攤商具備正確的衛生知識與態度，但受限於夜市硬體設施的先天不足，例如水源取得不便，導致在手部清潔與預防交叉污染等實際行為上仍有改善空間。同時，從營養學角度分析，鹽酥雞、蚵仔煎等指標性美食普遍存在高熱量與高鈉含量的問題。一份典型的小吃組合其熱量往往超過成年人每日建議攝取量的一半，長期且高頻率的攝取可能增加心血管疾病的健康風險，這使得如何在保留美味的同時進行營養優化，成為未來發展的重點。
+                    </p>
+
+                    <p>
+                        進入後疫情時代，台灣夜市展現出強大的韌性（Resilience），並在壓力下經歷了顯著的數位轉型（Digital Transformation）。傳統的「口味口碑」已不足以吸引新一代消費者，特別是青年族群在選擇美食時，高度受到社群媒體（Social Media）上的視覺感官行銷（Visual Sensory Marketing）與意見領袖推薦的影響，促使攤商轉向注重產品包裝與視覺化呈現。同時，為因應疫情期間的社交距離限制，夜市透過與外送平台的深度結合，發展出「雲端夜市」的營運邏輯，打破了空間限制，使現場體驗與數位便利得以並行，重塑了傳統夜市的地景特徵。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Conclusion -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 bg-gradient-to-br from-indigo-900/20 to-transparent">
+                    <h3 class="text-2xl font-bold mb-6 text-accent-indigo">簡要結論</h3>
+                    <p class="text-night-100 leading-relaxed">
+                        台灣夜市美食具備強大的文化吸引力，是國家形象的重要載體。雖然面臨食品衛生設施現代化與國民健康風險的考驗，但透過後疫情時代的數位技術轉型與社群行銷策略，夜市文化展現了靈活的適應力。未來應加強硬體基礎設施改善，並在數位化浪潮中維持在地特色。
+                    </p>
+                </div>
+                
+                <div class="glass-panel p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-night-400">引用文獻</h3>
+                    <ol class="text-sm text-night-400 space-y-2 list-decimal list-inside">
+                        <li>林政宏、張淑君 (2021)。《台灣夜市美食吸引力、旅遊滿意度與重遊意願》</li>
+                        <li>王美惠、陳信宏等 (2022)。《台灣觀光夜市從業人員衛生現況調查》</li>
+                        <li>李佳穎 (2020)。《台灣夜市常見小吃之營養組成分析》</li>
+                        <li>吳佩珊 (2023)。《Instagram 視覺感官行銷對夜市美食選擇之影響》</li>
+                        <li>蔡承翰、黃建勳 (2022)。《COVID-19 疫情下台灣夜市韌性與轉型》</li>
+                        <li>鄭長源 (2021)。《從地方小吃至國際品牌：台灣夜市美食文化轉譯》</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Centered Footer with specific requirements -->
+        <div class="pt-12 pb-6 text-center border-t border-white/5">
+            <p class="text-night-400 font-sans tracking-wide">
+                【主題探索報告】by <span class="italic text-accent-red font-semibold">Famidoc Chang</span>
+            </p>
+            <p class="mt-2 text-[10px] text-night-600 font-display uppercase tracking-widest">
+                A888888888
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        // Simple Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
